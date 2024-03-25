@@ -1,15 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Tick</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  </head>
-  <body>
-    <a href="/">
-      <h1>LOGO</h1>
-    </a>
-    <a href="{% url 'login' %}"> Login</a>>
-    <hr />
-  </body>
-</html>
+<nav class="navbar">
+  <div class="container">
+
+    <div class="navbar-header">
+      <button class="navbar-toggler" data-toggle="open-navbar1">
+        <span></span>
+        <span></span>
+        <span></span>d
+      </button>
+      <a href="#">
+        <h4>TI<span>CK</span></h4>
+      </a>
+    </div>
+
+    <div class="navbar-menu" id="open-navbar1">
+      <ul class="navbar-nav">
+        <li class="active"><a href="{% url 'home' %}">Acasă</a></li>
+        <li class="navbar-dropdown">
+          <a href="#" class="dropdown-toggler" data-dropdown="my-dropdown-id">
+            Categorii <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown" id="my-dropdown-id">
+            <li><a href="#">Categorie 1</a></li>
+            <li class="separator"></li>
+            <li><a href="#">Categorie 2</a></li>
+            <li class="separator"></li>
+            <li><a href="#">Categorie 3</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">Despre</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="{% url 'login' %}">Autentificare</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
