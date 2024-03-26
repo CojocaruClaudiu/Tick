@@ -1,33 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-  <title>Webleb</title>
-  <meta charset="utf-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-  <!-- Add other common CSS stylesheets here -->
-  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
-</head>
-<body>
+  <head>
+    <title>Webleb</title>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="/templates/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
+  </head>
+  <body>
+    {% include 'navbar.html' %} {% block content %} {% endblock %}
 
-    {% include 'navbar.html' %}
-
-    {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-  <div class="container">
-    {% block content %}
-
-    {% endblock content %}
-  <script src="{% static 'js/script.js' %}"></script>
-  </div>
-</body>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
 </html>

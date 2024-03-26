@@ -1,73 +1,129 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} {% block content %}
 
-{% block content %}
 <div class="section">
-	<div class="container">
-		<div class="row full-height justify-content-center">
-		 <body>
-<div id="stars"></div>
-<div id="stars2"></div>
-<div id="stars3"></div>
-<div class="section">
-	<div class="container">
-		<div class="row full-height justify-content-center">
-			<div class="col-12 text-center align-self-center py-5">
-				<div class="section pb-5 pt-5 pt-sm-2 text-center">
-					<h6 class="mb-0 pb-3"><span>Autentificare </span><span>Înregistrare</span></h6>
-								<input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
-								<label for="reg-log"></label>
-					<div class="card-3d-wrap mx-auto">
-						<div class="card-3d-wrapper">
-							<div class="card-front">
-								<div class="center-wrap">
-									<div class="section text-center">
-										<h4 class="mb-4 pb-3">Autentificare</h4>
-										<div class="form-group">
-											<input type="email" class="form-style" placeholder="Email">
-											<i class="input-icon uil uil-at"></i>
-										</div>
-										<div class="form-group mt-2">
-											<input type="password" class="form-style" placeholder="Parolă">
-											<i class="input-icon uil uil-lock-alt"></i>
-										</div>
-										<a href="https://www.web-leb.com/code" class="btn mt-4">Autentificare</a>
-										<p class="mb-0 mt-4 text-center"><a href="https://www.web-leb.com/code" class="link">Ai uitat parola?</a></p>
-											</div>
-										</div>
-									</div>
-							<div class="card-back">
-								<div class="center-wrap">
-									<div class="section text-center">
-										<h4 class="mb-3 pb-3">Înregistrare</h4>
-										<div class="form-group">
-											<input type="text" class="form-style" placeholder="Nume complet">
-											<i class="input-icon uil uil-user"></i>
-										</div>
-										<div class="form-group mt-2">
-											<input type="tel" class="form-style" placeholder="Număr de telefon">
-											<i class="input-icon uil uil-phone"></i>
-										</div>
-										<div class="form-group mt-2">
-											<input type="email" class="form-style" placeholder="Email">
-											<i class="input-icon uil uil-at"></i>
-										</div>
-										<div class="form-group mt-2">
-											<input type="password" class="form-style" placeholder="Parolă">
-											<i class="input-icon uil uil-lock-alt"></i>
-										</div>
-										<a href="https://www.web-leb.com/code" class="btn mt-4">Înregistrare</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		</div>
-</div>
-</body>
-		</div>
-	</div>
+  <div class="container">
+    <div class="row full-height justify-content-center">
+      <body>
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div class="section">
+          <div class="container">
+            <div class="row full-height justify-content-center">
+              <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                  <h6 class="mb-0 pb-3">
+                    <span>Autentificare </span><span>Înregistrare</span>
+                  </h6>
+                  <input
+                    class="checkbox"
+                    type="checkbox"
+                    id="reg-log"
+                    name="reg-log"
+                  />
+                  <label for="reg-log"></label>
+                  <div class="card-3d-wrap mx-auto">
+                    <div class="card-3d-wrapper">
+                      <div class="card-front">
+                        <div class="center-wrap">
+                          <div class="section text-center">
+                            <h4 class="mb-4 pb-3">Autentificare</h4>
+                            <form method="POST" action="{% url 'login' %}">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                <input
+                                  type="text"
+                                  name="username"
+                                  class="form-style"
+                                  placeholder="Username"
+                                />
+                                <i class="input-icon uil uil-user"></i>
+                              </div>
+                              <div class="form-group mt-2">
+                                <input
+                                  type="password"
+                                  name="password"
+                                  class="form-style"
+                                  placeholder="Parolă"
+                                />
+                                <i class="input-icon uil uil-lock-alt"></i>
+                              </div>
+                              <input
+                                type="submit"
+                                class="btn mt-4"
+                                value="Autentificare"
+                              />
+                            </form>
+                            {% if messages %}
+                            <ul class="messages">
+                              {% for message in messages %}
+                              <li>{{ message }}</li>
+                              {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <p class="mb-0 mt-4 text-center">
+                              <a
+                                href="https://www.web-leb.com/code"
+                                class="link"
+                                >Ai uitat parola?</a
+                              >
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-back">
+                        <div class="center-wrap">
+                          <div class="section text-center">
+                            <h4 class="mb-3 pb-3">Înregistrare</h4>
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-style"
+                                placeholder="Nume complet"
+                              />
+                              <i class="input-icon uil uil-user"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                              <input
+                                type="tel"
+                                class="form-style"
+                                placeholder="Număr de telefon"
+                              />
+                              <i class="input-icon uil uil-phone"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                              <input
+                                type="email"
+                                class="form-style"
+                                placeholder="Email"
+                              />
+                              <i class="input-icon uil uil-at"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                              <input
+                                type="password"
+                                class="form-style"
+                                placeholder="Parolă"
+                              />
+                              <i class="input-icon uil uil-lock-alt"></i>
+                            </div>
+                            <a
+                              href="https://www.web-leb.com/code"
+                              class="btn mt-4"
+                              >Înregistrare</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </body>
+    </div>
+  </div>
 </div>
 {% endblock content %}

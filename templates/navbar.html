@@ -1,6 +1,6 @@
+{% load static %}
 <nav class="navbar">
   <div class="container">
-
     <div class="navbar-header">
       <button class="navbar-toggler" data-toggle="open-navbar1">
         <span></span>
@@ -30,7 +30,16 @@
 
         <li><a href="#">Despre</a></li>
         <li><a href="#">Contact</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        <div class="header_user">
+          <p>
+            {{ request.user.username }} <span>@ {{request.user.username}}</span>
+          </p>
+        </div>
+        {% else %}
         <li><a href="{% url 'login' %}">Autentificare</a></li>
+        {% endif %}
       </ul>
     </div>
   </div>

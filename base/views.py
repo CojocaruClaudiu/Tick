@@ -1,15 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Room
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
-#rooms = [
-#    {'id': 1, 'name': 'Lets learn python'},
-#    {'id': 2, 'name': 'Design with me'},
-#    {'id': 3, 'name': 'Fronted Developers'},
-#]
 
 def loginPage(request):
 
@@ -20,10 +16,22 @@ def loginPage(request):
         try:
             user = User.objects.get(username=username)
         except:
-            message.error(request, 'Numele de utilizator nu există')
+            messages.error(request, 'Numele de utilizator nu există')
 
-    context ={}
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:    
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Numele de utilizator sau parola sunt greșite')
+    context = {}
     return render(request, 'base/login_register.html', context)
+
+
+def logoutuser (request):
+    logout(request)
+    return redirect('home')
 
 
 def home(request):
