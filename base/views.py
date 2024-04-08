@@ -1,46 +1,75 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Room
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+import logging
 
-# Create your views here.
+# Configure logger for the app
+logger = logging.getLogger(__name__)
 
 
-def loginPage(request):
-
+def registerPage(request):
+    form = UserCreationForm()
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'Numele de utilizator nu există')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:    
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
             login(request, user)
+            logger.info(f"Registration successful for user: {user.username}")
             return redirect('home')
         else:
-            messages.error(request, 'Numele de utilizator sau parola sunt greșite')
-    context = {}
-    return render(request, 'base/login_register.html', context)
+            logger.warning(f"Registration failed due to form errors: {form.errors}")
+            messages.error(request, 'An error occurred during registration')
+    return render(request, 'base/login_register.html', {'form': form})
 
 
-def logoutuser (request):
+def login_register_page(request):
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if request.POST.get('submit') == 'sign_in':
+            # Process the sign-in form
+            username = request.POST.get('username', '').lower()
+            password = request.POST.get('password', '')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                logger.info(f"Login successful for user: {username}")
+                return redirect('home')
+            else:
+                messages.error(request, 'Username or password is incorrect')
+                logger.warning(f"Login failed for user: {username}")
+        elif request.POST.get('submit') == 'sign_up':
+            # Process the sign-up form
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.save()
+                login(request, user)
+                logger.info(f"Registration successful for user: {user.username}")
+                return redirect('home')
+            else:
+                messages.error(request, 'An error occurred during registration')
+                logger.warning(f"Registration failed due to form errors: {form.errors}")
+        # Redirect back to the same page to show form with potential error messages
+        return redirect('login_register')
+    else:
+        # When request method is not POST, show the default page with both forms
+        login_form = AuthenticationForm()
+        register_form = UserCreationForm()
+        return render(request, 'base/login_register.html', {'login_form': login_form, 'register_form': register_form})
+
+
+
+def logoutUser(request):
+    logger.info("User logged out")
     logout(request)
     return redirect('home')
 
 
 def home(request):
-    rooms = Room.objects.all()
-    context = {'rooms': rooms}
-    return render(request, 'base/home.html', context)
-
-
-def room(request, pk):
-    room = Room.objects.get(id=pk)
-    context = {'room': room}
-    return render(request, 'base/room.html', context)
+    logger.debug("Home page accessed")
+    return render(request, 'base/home.html')

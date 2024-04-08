@@ -38,7 +38,9 @@
           </p>
         </div>
         {% else %}
-        <li><a href="{% url 'login' %}">Autentificare</a></li>
+        <li>
+          <a href="{% url 'login_register' %}">Autentificare / Înregistrare</a>
+        </li>
         {% endif %}
       </ul>
     </div>

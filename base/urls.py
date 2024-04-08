@@ -2,8 +2,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('login/', views.loginPage, name='login'),
-    path('logout/', views.logoutuser, name='logout'),
+    # Combined login and registration page
+    path('login_register/', views.login_register_page, name='login_register'),
+    # Logout
+    path('logout/', views.logoutUser, name='logout'),
+    # Home page
     path('', views.home, name="home"),
-    path('room/<str:pk>/', views.room, name="room"),
+    # Add any other URLs you need for your application
 ]
